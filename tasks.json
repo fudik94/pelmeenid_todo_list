@@ -1,14 +1,14 @@
 [
-    {
-        "id": 1,
-        "description": "Buy milk",
-        "priority": "High",
-        "completed": false
-    },
-    {
-        "id": 2,
-        "description": "Call Alice!",
-        "priority": "Medium",
-        "completed": false
-    }
+  {
+    "id": 1,
+    "description": "Buy milk",
+    "priority": "High",
+    "completed": false
+  },
+  {
+    "id": 2,
+    "description": "Call Alice!",
+    "priority": "Medium",
+    "completed": false
+  }
 ]

@@ -1,3 +1,4 @@
+from mark_complete import mark_complete
 import json
 import os
 
@@ -42,6 +43,7 @@ def main_menu():
         print("1. Add Task")
         print("2. View Tasks")
         print("3. Exit")
+        print("4. Mark Task Complete")
         choice = input("Choose an option: ")
 
         if choice == "1":
@@ -57,6 +59,12 @@ def main_menu():
         elif choice == "3":
             print("Exiting...")
             break
+        elif choice == "4":
+            try:
+                task_id = int(input("Enter task ID to mark complete: "))
+                mark_complete(tasks, task_id, save_tasks)
+            except ValueError:
+                print("Invalid ID. Please enter a number.")
         else:
             print("Invalid option. Try again.")
 
