@@ -1,4 +1,6 @@
 # Todo List with Priorities
+![Logo lv](https://github.com/user-attachments/assets/e8a16ea8-2f9b-4a93-ac88-0172b30977f2)
+
 
 Team: Pelmeenid  
 Members: Fuad, Suzanna, Yuliya, Iryna  
