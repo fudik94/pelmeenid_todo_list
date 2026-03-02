@@ -17,7 +17,7 @@ def save_tasks(tasks):
 tasks = load_tasks()
 
 # ----- US-01: add_task() -----
-def add_task(description, priority):
+def add_task(description, priority="Medium"):
     if not description.strip():
         print("Error: Task description cannot be empty!")
         return
@@ -60,6 +60,26 @@ def main_menu():
         else:
             print("Invalid option. Try again.")
 
-# ----- Optional: quick test -----
+# === Set priority of a task ===
+def set_priority(task_id, new_priority):
+    if new_priority not in ["Low", "Medium", "High"]:
+        print("Priority must be 'Low', 'Medium', or 'High'")
+        return
+
+    for task in tasks:
+        if task['id'] == task_id:
+            task['priority'] = new_priority
+            save_tasks(tasks)
+            print(f"Task {task_id} priority set to {new_priority}")
+            return
+    print(f"Task with id {task_id} not found.")
+
 if __name__ == "__main__":
-    main_menu()
+    add_task("Task 1")            # Medium by default
+    add_task("Task 2", "High")    # High
+    add_task("Task 3", "Low")     # Low
+
+    set_priority(1, "Low")        # Task 1 → Low
+    set_priority(2, "Medium")     # Task 2 → Medium
+    set_priority(4, "High")       # ID 4 doesn't exist
+    set_priority(2, "Urgent")     # Invalid priority
