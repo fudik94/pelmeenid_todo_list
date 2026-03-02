@@ -1,7 +1,7 @@
 # Todo List with Priorities
 
 Team: Pelmeenid  
-Members: Fuad, Suzanna, Julia, Iryna  
+Members: Fuad, Suzanna, Yuliya, Iryna  
 
 ## Project Description
 This project is an Agile Sprint-based task management application developed in Python.  
