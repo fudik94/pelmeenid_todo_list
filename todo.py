@@ -16,6 +16,27 @@ def save_tasks(tasks):
 
 tasks = load_tasks()
 
+# ===== Task Summary (NEW) =====
+def task_summary(tasks):
+    """
+    US-07 task
+    """
+    total = len(tasks)
+    completed = sum(1 for t in tasks if t.get("completed") is True)
+    pending = total - completed
+    return {
+        "total": total,
+        "completed": completed,
+        "pending": pending,
+    }
+
+def print_task_summary(tasks):
+    s = task_summary(tasks)
+    print("\n=== TASK SUMMARY ===")
+    print(f"Total: {s['total']}")
+    print(f"Completed: {s['completed']}")
+    print(f"Pending: {s['pending']}")
+
 # ----- US-01: add_task() -----
 def add_task(description, priority="Medium"):
     if not description.strip():
@@ -52,8 +73,9 @@ def main_menu():
         print("\n=== TODO LIST MANAGER ===")
         print("1. Add Task")
         print("2. View Tasks")
-        print("3. Delete Task")
-        print("4. Exit")
+        print("3. Exit")
+        print("4. Mark Task Complete")
+        print("5. Task Summary")  # NEW
         choice = input("Choose an option: ")
 
         if choice == "1":
@@ -72,9 +94,8 @@ def main_menu():
                 delete_task(task_id)
             except ValueError:
                 print("Invalid ID. Please enter a number.")
-        elif choice == "4":
-            print("Exiting...")
-            break
+        elif choice == "5":  # NEW
+            print_task_summary(tasks)
         else:
             print("Invalid option. Try again.")
 
