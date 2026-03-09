@@ -1,3 +1,4 @@
+from filtering import filter_tasks_by_priority
 from mark_complete import mark_complete
 import json
 import os
@@ -5,19 +6,24 @@ import os
 # ----- Load / Save tasks -----
 TASKS_FILE = "tasks.json"
 
+
 def load_tasks():
     if os.path.exists(TASKS_FILE):
         with open(TASKS_FILE, "r") as f:
             return json.load(f)
     return []
 
+
 def save_tasks(tasks):
     with open(TASKS_FILE, "w") as f:
         json.dump(tasks, f, indent=4)
 
+
 tasks = load_tasks()
 
 # ----- US-01: add_task() -----
+
+
 def add_task(description, priority="Medium"):
     if not description.strip():
         print("Error: Task description cannot be empty!")
@@ -34,9 +40,12 @@ def add_task(description, priority="Medium"):
     }
     tasks.append(task)
     save_tasks(tasks)
-    print(f"Task '{description}' added with ID {task_id} and priority {priority}.")
+    print(
+        f"Task '{description}' added with ID {task_id} and priority {priority}.")
 
 # ----- Simple Menu for Testing -----
+
+
 def main_menu():
     while True:
         print("\n=== TODO LIST MANAGER ===")
@@ -44,6 +53,8 @@ def main_menu():
         print("2. View Tasks")
         print("3. Exit")
         print("4. Mark Task Complete")
+        print("5. Filter by priority")
+
         choice = input("Choose an option: ")
 
         if choice == "1":
@@ -55,7 +66,8 @@ def main_menu():
                 print("No tasks yet!")
             for t in tasks:
                 status = "Done" if t["completed"] else "Pending"
-                print(f"{t['id']}: {t['description']} [{t['priority']}] - {status}")
+                print(
+                    f"{t['id']}: {t['description']} [{t['priority']}] - {status}")
         elif choice == "3":
             print("Exiting...")
             break
@@ -65,10 +77,18 @@ def main_menu():
                 mark_complete(tasks, task_id, save_tasks)
             except ValueError:
                 print("Invalid ID. Please enter a number.")
+        elif choice == "5":
+            priority = input("Enter priority (High/Medium/Low): ")
+            filtered = filter_tasks_by_priority(tasks, priority)
+            print("\nFiltered tasks:")
+            for task in filtered:
+                print(task)
         else:
             print("Invalid option. Try again.")
 
 # === Set priority of a task ===
+
+
 def set_priority(task_id, new_priority):
     if new_priority not in ["Low", "Medium", "High"]:
         print("Priority must be 'Low', 'Medium', or 'High'")
@@ -81,6 +101,7 @@ def set_priority(task_id, new_priority):
             print(f"Task {task_id} priority set to {new_priority}")
             return
     print(f"Task with id {task_id} not found.")
+
 
 if __name__ == "__main__":
     add_task("Task 1")            # Medium by default
