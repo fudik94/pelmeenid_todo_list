@@ -73,9 +73,9 @@ def main_menu():
         print("\n=== TODO LIST MANAGER ===")
         print("1. Add Task")
         print("2. View Tasks")
-        print("3. Exit")
-        print("4. Mark Task Complete")
-        print("5. Task Summary")  # NEW
+        print("3. Delete Task")
+        print("4. Exit")
+        print("5. Clear Completed Tasks")
         choice = input("Choose an option: ")
 
         if choice == "1":
@@ -94,8 +94,11 @@ def main_menu():
                 delete_task(task_id)
             except ValueError:
                 print("Invalid ID. Please enter a number.")
-        elif choice == "5":  # NEW
-            print_task_summary(tasks)
+        elif choice == "4":
+            print("Exiting...")
+            break
+        elif choice == "5":
+            clear_completed_tasks()
         else:
             print("Invalid option. Try again.")
 
@@ -123,15 +126,18 @@ def delete_task(task_id):
             return
     print(f"Task with id {task_id} is not found.")
 
+# === Clear completed tasks ===
+def clear_completed_tasks():
+    any_deleted = False # Flag to check if any tasks were deleted
+    for task in tasks[:]: # Iterate over a copy of the list
+        if task['completed']:
+            tasks.remove(task)
+            any_deleted = True
+    save_tasks(tasks)
+    if any_deleted:
+        print("All completed tasks have been cleared.")
+    else:
+        print("No completed tasks to clear.")
+
 if __name__ == "__main__":
-    add_task("Task 1")            # Medium by default
-    add_task("Task 2", "High")    # High
-    add_task("Task 3", "Low")     # Low
-
-    set_priority(1, "Low")        # Task 1 → Low
-    set_priority(2, "Medium")     # Task 2 → Medium
-    set_priority(4, "High")       # ID 4 doesn't exist
-    set_priority(2, "Urgent")     # Invalid priority
-    view_tasks(tasks)
     main_menu() #start menu
-
