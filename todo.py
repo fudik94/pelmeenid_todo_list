@@ -1,4 +1,3 @@
-from mark_complete import mark_complete
 import json
 import os
 
@@ -42,8 +41,8 @@ def main_menu():
         print("\n=== TODO LIST MANAGER ===")
         print("1. Add Task")
         print("2. View Tasks")
-        print("3. Exit")
-        print("4. Mark Task Complete")
+        print("3. Delete Task")
+        print("4. Exit")
         choice = input("Choose an option: ")
 
         if choice == "1":
@@ -57,14 +56,14 @@ def main_menu():
                 status = "Done" if t["completed"] else "Pending"
                 print(f"{t['id']}: {t['description']} [{t['priority']}] - {status}")
         elif choice == "3":
-            print("Exiting...")
-            break
-        elif choice == "4":
             try:
-                task_id = int(input("Enter task ID to mark complete: "))
-                mark_complete(tasks, task_id, save_tasks)
+                task_id = int(input("Enter task ID to delete: "))
+                delete_task(task_id)
             except ValueError:
                 print("Invalid ID. Please enter a number.")
+        elif choice == "4":
+            print("Exiting...")
+            break
         else:
             print("Invalid option. Try again.")
 
@@ -82,6 +81,16 @@ def set_priority(task_id, new_priority):
             return
     print(f"Task with id {task_id} not found.")
 
+#=== Delete a task ===
+def delete_task(task_id):
+    for task in tasks:
+        if task['id'] == task_id:
+            tasks.remove(task)
+            save_tasks(tasks)
+            print(f"Task {task_id} deleted.")
+            return
+    print(f"Task with id {task_id} is not found.")
+
 if __name__ == "__main__":
     add_task("Task 1")            # Medium by default
     add_task("Task 2", "High")    # High
@@ -91,3 +100,5 @@ if __name__ == "__main__":
     set_priority(2, "Medium")     # Task 2 → Medium
     set_priority(4, "High")       # ID 4 doesn't exist
     set_priority(2, "Urgent")     # Invalid priority
+
+    main_menu() #start menu
