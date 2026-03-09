@@ -73,9 +73,10 @@ def main_menu():
         print("\n=== TODO LIST MANAGER ===")
         print("1. Add Task")
         print("2. View Tasks")
-        print("3. Delete Task")
-        print("4. Exit")
-        print("5. Clear Completed Tasks")
+        print("3. Exit")
+        print("4. Mark Task Complete")
+        print("5. Task Summary")  # NEW
+        print("6. Edit Task")  #new option for editing tasks
         choice = input("Choose an option: ")
 
         if choice == "1":
@@ -94,11 +95,15 @@ def main_menu():
                 delete_task(task_id)
             except ValueError:
                 print("Invalid ID. Please enter a number.")
-        elif choice == "4":
-            print("Exiting...")
-            break
-        elif choice == "5":
-            clear_completed_tasks()
+        elif choice == "5":  # NEW
+            print_task_summary(tasks)
+        elif choice == "6":  # Edit task option
+            try:
+                task_id = int(input("Enter task ID to edit: "))
+                new_description = input("Enter new task description: ")
+                edit_task(task_id, new_description)
+            except ValueError:
+                print("Invalid ID. Please enter a number.")
         else:
             print("Invalid option. Try again.")
 
@@ -126,18 +131,20 @@ def delete_task(task_id):
             return
     print(f"Task with id {task_id} is not found.")
 
-# === Clear completed tasks ===
-def clear_completed_tasks():
-    any_deleted = False # Flag to check if any tasks were deleted
-    for task in tasks[:]: # Iterate over a copy of the list
-        if task['completed']:
-            tasks.remove(task)
-            any_deleted = True
-    save_tasks(tasks)
-    if any_deleted:
-        print("All completed tasks have been cleared.")
-    else:
-        print("No completed tasks to clear.")
+# === US-09: edit_task ===
+def edit_task(task_id, new_description):
+    if not new_description.strip():
+        print("Error: Task description cannot be empty!")
+        return
+
+    for task in tasks:
+        if task['id'] == task_id:
+            old_description = task['description']
+            task['description'] = new_description
+            save_tasks(tasks)
+            print(f"Task {task_id} description changed from '{old_description}' to '{new_description}'")
+            return
+    print(f"Task with id {task_id} not found.")
 
 if __name__ == "__main__":
     main_menu() #start menu
