@@ -1,5 +1,11 @@
+
+
+"""main file launch from this file if u want test our todo list manager"""
+
 import json
 import os
+from sorting import sort_tasks_by_priority
+from mark_complete import mark_complete
 
 # ----- Load / Save tasks -----
 TASKS_FILE = "tasks.json"
@@ -73,28 +79,39 @@ def main_menu():
         print("\n=== TODO LIST MANAGER ===")
         print("1. Add Task")
         print("2. View Tasks")
-        print("3. Exit")
+        print("3. Delete Task")
         print("4. Mark Task Complete")
         print("5. Task Summary")  # NEW
         print("6. Edit Task")  #new option for editing tasks
+        print("7. View Tasks (Sorted by Priority)")#new option for viewing tasks sorted by priority US-10
+        print("0. Exit")
         choice = input("Choose an option: ")
 
-        if choice == "1":
+        if choice == "0":
+            print("Goodbye! Thank you for using Pelmeenid products.")
+            break
+
+
+        elif choice == "1":
             description = input("Enter task description: ")
             priority = input("Enter priority (High/Medium/Low): ")
             add_task(description, priority)
         elif choice == "2":
-            if not tasks:
-                print("No tasks yet!")
-            for t in tasks:
-                status = "Done" if t["completed"] else "Pending"
-                print(f"{t['id']}: {t['description']} [{t['priority']}] - {status}")
+            view_tasks(tasks)
+
         elif choice == "3":
             try:
                 task_id = int(input("Enter task ID to delete: "))
                 delete_task(task_id)
             except ValueError:
                 print("Invalid ID. Please enter a number.")
+        elif choice == "4":
+            try:
+                task_id = int(input("Enter task ID to mark complete: "))
+                mark_complete(tasks, task_id, save_tasks)
+            except ValueError:
+                print("Invalid ID. Please enter a number.")
+
         elif choice == "5":  # NEW
             print_task_summary(tasks)
         elif choice == "6":  # Edit task option
@@ -104,6 +121,9 @@ def main_menu():
                 edit_task(task_id, new_description)
             except ValueError:
                 print("Invalid ID. Please enter a number.")
+        elif choice == "7":
+            sorted_tasks = sort_tasks_by_priority(tasks)
+            view_tasks(sorted_tasks)
         else:
             print("Invalid option. Try again.")
 
