@@ -2,25 +2,37 @@
 
 <img src="https://github.com/user-attachments/assets/e8a16ea8-2f9b-4a93-ac88-0172b30977f2" alt="Logo lv" width="200"/>
 
-Team: Pelmeenid  
-Members: Fuad, Suzanna, Yuliya, Iryna  
+
+# Pelmeenid Todo List Manager
+
+**Team:** Pelmeenid  
+**Members:** Fuad, Suzanna, Yuliya, Iryna
 
 ## Project Description
-This project is an Agile Sprint-based task management application developed in Python.  
-The application allows users to:
+A simple Agile/Scrum sprint-based task management application written in Python.
 
+The application allows users to:
 - Create tasks
-- Assign priorities (High, Medium, Low)
+- Assign priorities (**High**, **Medium**, **Low**)
 - Mark tasks as complete
-- Filter tasks by priority or status
 - Delete tasks
+- Edit task descriptions
 - View task summaries
+- View tasks sorted by priority (**High → Medium → Low**)
+- Filter tasks by priority (module included)
 
 ## Methodology
-The project is developed using Scrum framework across two sprints:
-- Sprint 1: Core CRUD functionality
-- Sprint 2: Filtering, management, and summary features
+The project was developed using the Scrum framework across two sprints:
+- **Sprint 1:** Core CRUD functionality
+- **Sprint 2:** Filtering, task management, and summary features
 
 ## Technology
 - Python 3
-- In-memory data storage (list of dictionaries)
+- JSON file storage (`tasks.json`) for persistence (list of dictionaries)
+
+## How to Run
+From the project folder:
+
+```bash
+python todo.py
+```
