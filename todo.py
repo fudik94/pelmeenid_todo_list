@@ -16,6 +16,27 @@ def save_tasks(tasks):
 
 tasks = load_tasks()
 
+# ===== Task Summary (NEW) =====
+def task_summary(tasks):
+    """
+    US-07 task
+    """
+    total = len(tasks)
+    completed = sum(1 for t in tasks if t.get("completed") is True)
+    pending = total - completed
+    return {
+        "total": total,
+        "completed": completed,
+        "pending": pending,
+    }
+
+def print_task_summary(tasks):
+    s = task_summary(tasks)
+    print("\n=== TASK SUMMARY ===")
+    print(f"Total: {s['total']}")
+    print(f"Completed: {s['completed']}")
+    print(f"Pending: {s['pending']}")
+
 # ----- US-01: add_task() -----
 def add_task(description, priority="Medium"):
     if not description.strip():
@@ -34,6 +55,17 @@ def add_task(description, priority="Medium"):
     tasks.append(task)
     save_tasks(tasks)
     print(f"Task '{description}' added with ID {task_id} and priority {priority}.")
+
+# ----- View tasks -----
+def view_tasks(tasks):
+    if not tasks:
+        print("No tasks available.")
+        return
+    print(f'{"ID":<5} {"Description":<30} {"Priority":<10} {"Completed":<10}')
+    print('-' * 60)
+    for task in tasks:
+        completed_status = 'Yes' if task['completed'] else 'No'
+        print(f"{task['id']:<5} {task['description']:<30} {task['priority']:<10} {completed_status:<10}")
 
 # ----- Simple Menu for Testing -----
 def main_menu():
