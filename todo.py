@@ -76,6 +76,7 @@ def main_menu():
         print("3. Exit")
         print("4. Mark Task Complete")
         print("5. Task Summary")  # NEW
+        print("6. Edit Task")  #new option for editing tasks
         choice = input("Choose an option: ")
 
         if choice == "1":
@@ -96,6 +97,13 @@ def main_menu():
                 print("Invalid ID. Please enter a number.")
         elif choice == "5":  # NEW
             print_task_summary(tasks)
+        elif choice == "6":  # Edit task option
+            try:
+                task_id = int(input("Enter task ID to edit: "))
+                new_description = input("Enter new task description: ")
+                edit_task(task_id, new_description)
+            except ValueError:
+                print("Invalid ID. Please enter a number.")
         else:
             print("Invalid option. Try again.")
 
@@ -123,15 +131,21 @@ def delete_task(task_id):
             return
     print(f"Task with id {task_id} is not found.")
 
-if __name__ == "__main__":
-    add_task("Task 1")            # Medium by default
-    add_task("Task 2", "High")    # High
-    add_task("Task 3", "Low")     # Low
+# === US-09: edit_task ===
+def edit_task(task_id, new_description):
+    if not new_description.strip():
+        print("Error: Task description cannot be empty!")
+        return
 
-    set_priority(1, "Low")        # Task 1 → Low
-    set_priority(2, "Medium")     # Task 2 → Medium
-    set_priority(4, "High")       # ID 4 doesn't exist
-    set_priority(2, "Urgent")     # Invalid priority
-    view_tasks(tasks)
+    for task in tasks:
+        if task['id'] == task_id:
+            old_description = task['description']
+            task['description'] = new_description
+            save_tasks(tasks)
+            print(f"Task {task_id} description changed from '{old_description}' to '{new_description}'")
+            return
+    print(f"Task with id {task_id} not found.")
+
+if __name__ == "__main__":
     main_menu() #start menu
 
