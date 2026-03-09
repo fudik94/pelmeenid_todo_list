@@ -113,5 +113,4 @@ if __name__ == "__main__":
     set_priority(2, "Urgent")     # Invalid priority
     view_tasks(tasks)
     main_menu() #start menu
-    
 
