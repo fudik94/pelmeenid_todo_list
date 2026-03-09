@@ -1,4 +1,3 @@
-from mark_complete import mark_complete
 import json
 import os
 
@@ -57,6 +56,17 @@ def add_task(description, priority="Medium"):
     save_tasks(tasks)
     print(f"Task '{description}' added with ID {task_id} and priority {priority}.")
 
+# ----- View tasks -----
+def view_tasks(tasks):
+    if not tasks:
+        print("No tasks available.")
+        return
+    print(f'{"ID":<5} {"Description":<30} {"Priority":<10} {"Completed":<10}')
+    print('-' * 60)
+    for task in tasks:
+        completed_status = 'Yes' if task['completed'] else 'No'
+        print(f"{task['id']:<5} {task['description']:<30} {task['priority']:<10} {completed_status:<10}")
+
 # ----- Simple Menu for Testing -----
 def main_menu():
     while True:
@@ -79,12 +89,9 @@ def main_menu():
                 status = "Done" if t["completed"] else "Pending"
                 print(f"{t['id']}: {t['description']} [{t['priority']}] - {status}")
         elif choice == "3":
-            print("Exiting...")
-            break
-        elif choice == "4":
             try:
-                task_id = int(input("Enter task ID to mark complete: "))
-                mark_complete(tasks, task_id, save_tasks)
+                task_id = int(input("Enter task ID to delete: "))
+                delete_task(task_id)
             except ValueError:
                 print("Invalid ID. Please enter a number.")
         elif choice == "5":  # NEW
@@ -106,6 +113,16 @@ def set_priority(task_id, new_priority):
             return
     print(f"Task with id {task_id} not found.")
 
+#=== Delete a task ===
+def delete_task(task_id):
+    for task in tasks:
+        if task['id'] == task_id:
+            tasks.remove(task)
+            save_tasks(tasks)
+            print(f"Task {task_id} deleted.")
+            return
+    print(f"Task with id {task_id} is not found.")
+
 if __name__ == "__main__":
     add_task("Task 1")            # Medium by default
     add_task("Task 2", "High")    # High
@@ -115,3 +132,6 @@ if __name__ == "__main__":
     set_priority(2, "Medium")     # Task 2 → Medium
     set_priority(4, "High")       # ID 4 doesn't exist
     set_priority(2, "Urgent")     # Invalid priority
+    view_tasks(tasks)
+    main_menu() #start menu
+
