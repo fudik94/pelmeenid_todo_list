@@ -1,4 +1,5 @@
 # Todo List with Priorities
+🎓 **Academic Project**
 
 <img src="https://github.com/user-attachments/assets/e8a16ea8-2f9b-4a93-ac88-0172b30977f2" alt="Logo lv" width="200"/>
 
