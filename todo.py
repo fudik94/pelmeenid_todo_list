@@ -69,12 +69,9 @@ def main_menu():
                 print(
                     f"{t['id']}: {t['description']} [{t['priority']}] - {status}")
         elif choice == "3":
-            print("Exiting...")
-            break
-        elif choice == "4":
             try:
-                task_id = int(input("Enter task ID to mark complete: "))
-                mark_complete(tasks, task_id, save_tasks)
+                task_id = int(input("Enter task ID to delete: "))
+                delete_task(task_id)
             except ValueError:
                 print("Invalid ID. Please enter a number.")
         elif choice == "5":
